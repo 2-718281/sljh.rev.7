@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="crossorigin" />
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400&display=swap" rel="stylesheet" />
+<style>
+html,body{margin:0;padding:0;background:#111;}
+a{color:#dcdcdc;}a:hover{color:#fff;}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes slowIn{from{opacity:0}to{opacity:1}}
+@keyframes blink{0%,49%{opacity:1}50%,100%{opacity:0}}
+input::placeholder{color:rgba(255,255,255,0.25);}
+</style>
+</helmet>
+<div style="width:100%;min-height:100vh;background:#0b0b0b;display:flex;align-items:center;justify-content:center;font-family:'Noto Sans SC',sans-serif;overflow:hidden">
+  <div style="position:relative;width:min(100vw,56.25vh);height:min(177.78vw,100vh);overflow:hidden;background:#222">
+
+    <sc-if value="{{ isLogin }}" hint-placeholder-val="{{ true }}">
+      <div style="position:absolute;inset:0;animation:fadeIn 700ms ease both">
+        <img src="uploads/Image_1789213088869_381.jpg" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:fill" />
+        <div style="position:absolute;left:25%;right:22%;top:34%;display:flex;flex-direction:column;gap:3.2vh;color:#e9e9e9">
+          <div style="display:flex;flex-direction:column;gap:0.9vh;font-size:clamp(13px,2.05vh,26px);letter-spacing:0.42em;font-weight:300">
+            <div>Rev.7</div>
+            <div>招募问卷废案</div>
+          </div>
+          <div style="display:flex;align-items:baseline;gap:0.8em;font-size:clamp(13px,2.05vh,26px);letter-spacing:0.42em;font-weight:300">
+            <span>密码</span>
+            <input type="password" value="{{ pw }}" onChange="{{ onPw }}" onKeyDown="{{ onKey }}" placeholder="" autoFocus="{{ true }}" style="flex:1;min-width:0;background:transparent;border:0;border-bottom:1px solid rgba(255,255,255,0.75);outline:none;color:#fff;font-family:inherit;font-size:inherit;letter-spacing:0.42em;padding:0 0 0.35em 0" />
+          </div>
+          <div style="display:flex;align-items:center;gap:1.4em;margin-top:0.6vh">
+            <button onClick="{{ submit }}" style="background:transparent;border:1px solid rgba(255,255,255,0.6);color:#e9e9e9;font-family:inherit;font-size:clamp(11px,1.6vh,20px);letter-spacing:0.35em;padding:0.7em 1.6em 0.7em 1.9em;cursor:pointer;transition:all 200ms" style-hover="background:rgba(255,255,255,0.12);border-color:#fff">开启</button>
+            <sc-if value="{{ err }}" hint-placeholder-val="{{ false }}">
+              <span style="color:#b9b9b9;font-size:clamp(10px,1.45vh,18px);letter-spacing:0.2em;animation:fadeIn 300ms both">密码不符</span>
+            </sc-if>
+          </div>
+        </div>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ isLetter }}" hint-placeholder-val="{{ false }}">
+      <div style="position:absolute;inset:0;animation:fadeIn 900ms ease both">
+        <img src="uploads/Image_1789213090546_146.jpg" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:fill" />
+        <div style="position:absolute;left:27%;right:24%;top:27%;bottom:29%;display:flex;flex-direction:column;color:#f0f0f0">
+          <sc-if value="{{ isQ }}" hint-placeholder-val="{{ false }}">
+            <div style="font-size:clamp(9px,1.3vh,16px);letter-spacing:0.4em;color:rgba(255,255,255,0.45);margin-bottom:2.4vh">{{ counter }}</div>
+          </sc-if>
+          <div style="font-size:clamp(12px,1.85vh,23px);line-height:2.1;letter-spacing:0.06em;white-space:pre-wrap;font-weight:300;text-wrap:pretty">{{ typed }}<span style="display:inline-block;width:0.55em;animation:blink 900ms step-end infinite">_</span></div>
+          <div style="flex:1"></div>
+          <sc-if value="{{ showIntroBtn }}" hint-placeholder-val="{{ false }}">
+            <div style="display:flex;animation:fadeIn 600ms both">
+              <button onClick="{{ begin }}" style="background:transparent;border:1px solid rgba(255,255,255,0.55);color:#f0f0f0;font-family:inherit;font-size:clamp(11px,1.6vh,20px);letter-spacing:0.35em;padding:0.75em 1.5em 0.75em 1.85em;cursor:pointer;transition:all 200ms" style-hover="background:rgba(255,255,255,0.12);border-color:#fff">开始</button>
+            </div>
+          </sc-if>
+          <sc-if value="{{ showChoices }}" hint-placeholder-val="{{ false }}">
+            <div style="display:flex;gap:1.4em;animation:fadeIn 600ms both">
+              <button onClick="{{ agree }}" style="flex:1;background:transparent;border:1px solid rgba(255,255,255,0.55);color:#f0f0f0;font-family:inherit;font-size:clamp(11px,1.6vh,20px);letter-spacing:0.35em;padding:0.85em 0 0.85em 0.35em;cursor:pointer;transition:all 200ms" style-hover="background:rgba(255,255,255,0.14);border-color:#fff">同意</button>
+              <button onClick="{{ oppose }}" style="flex:1;background:transparent;border:1px solid rgba(255,255,255,0.55);color:#f0f0f0;font-family:inherit;font-size:clamp(11px,1.6vh,20px);letter-spacing:0.35em;padding:0.85em 0 0.85em 0.35em;cursor:pointer;transition:all 200ms" style-hover="background:rgba(255,255,255,0.14);border-color:#fff">反对</button>
+            </div>
+          </sc-if>
+        </div>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ isBlack }}" hint-placeholder-val="{{ false }}">
+      <div style="position:absolute;inset:0;background:#000;display:flex;align-items:center;justify-content:center;padding:0 12%;animation:fadeIn 1200ms ease both">
+        <div style="color:#f2f2f2;font-size:clamp(12px,1.9vh,24px);line-height:2;letter-spacing:0.08em;text-align:center;font-weight:300">{{ typed }}</div>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ isBlue }}" hint-placeholder-val="{{ false }}">
+      <div onClick="{{ restart }}" style="position:absolute;inset:0;cursor:pointer;animation:slowIn 2200ms ease both">
+        <img src="uploads/Image_1789213093942_193.jpg" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:fill" />
+        <div style="position:absolute;left:0;right:0;top:47%;text-align:center;color:#fff;font-size:clamp(15px,2.4vh,30px);letter-spacing:0.5em;font-weight:300;text-indent:0.5em;animation:slowIn 3200ms ease both">欢迎回家</div>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ isWhite }}" hint-placeholder-val="{{ false }}">
+      <div onClick="{{ restart }}" style="position:absolute;inset:0;cursor:pointer;animation:slowIn 2200ms ease both">
+        <img src="uploads/Image_1789213096082_537.jpg" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:fill" />
+        <div style="position:absolute;left:0;right:0;top:47%;text-align:center;color:#1a1a1a;font-size:clamp(15px,2.4vh,30px);letter-spacing:0.5em;font-weight:300;text-indent:0.5em;animation:slowIn 3200ms ease both">欢迎回家</div>
+      </div>
+    </sc-if>
+
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;password&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;signa&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;typeSpeed&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:85,&quot;min&quot;:20,&quot;max&quot;:200,&quot;step&quot;:5,&quot;unit&quot;:&quot;ms&quot;,&quot;tsType&quot;:&quot;number&quot;},&quot;blueThreshold&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:5,&quot;min&quot;:1,&quot;max&quot;:10,&quot;tsType&quot;:&quot;number&quot;}}">
+class Component extends DCLogic {
+  state = { screen: 'login', pw: '', err: false, qi: 0, yes: 0, typed: '', done: false };
+
+  QS = [
+    '你对一个充满分歧的个体社会感到厌恶。',
+    '完全和谐、没有冲突的集体意识比充满分歧的个体社会更“完美”。',
+    '抛下同伴独自逃生是一种不可饶恕的罪。',
+    '会伤害他人的真相应该被隐瞒。',
+    '你会因为他人将自认为正确的未来强加给你而憎恨。',
+    '你愿为不可能的希望拼尽全力。',
+    '“自我”是一组连续感知的集合，而非某个固定不变的灵魂实体。',
+    '“家”是一段记忆或一种情感状态，而非一个物理坐标。',
+    '我们可以一起“回家”。',
+    '对该问卷你如实表达了你的想法。'
+  ];
+  INTRO = '这是一份用于了解你是否适合于我们同行的问卷，\n你只需要用“是”或“否”来表达你的看法。';
+  FOG = '迷雾将我们分隔，我们从未真正对话过。';
+
+  type(text, after) {
+    clearInterval(this._t);
+    clearTimeout(this._a);
+    this.setState({ typed: '', done: false });
+    let i = 0;
+    const speed = this.props.typeSpeed ?? 85;
+    this._t = setInterval(() => {
+      i++;
+      this.setState({ typed: text.slice(0, i) });
+      if (i >= text.length) {
+        clearInterval(this._t);
+        this.setState({ done: true });
+        if (after) this._a = setTimeout(after, 1800);
+      }
+    }, speed);
+  }
+
+  componentWillUnmount() { clearInterval(this._t); clearTimeout(this._a); }
+
+  submit = () => {
+    const pass = this.props.password ?? 'signa';
+    if (this.state.pw.trim().toLowerCase() === String(pass).toLowerCase()) {
+      this.setState({ screen: 'intro', err: false });
+      this.type(this.INTRO);
+    } else {
+      this.setState({ err: true });
+    }
+  };
+
+  begin = () => {
+    this.setState({ screen: 'q', qi: 0, yes: 0 });
+    this.type(this.QS[0]);
+  };
+
+  finish = (lastNo) => {
+    const threshold = this.props.blueThreshold ?? 5;
+    const end = this.state.yes >= threshold ? 'blue' : 'white';
+    if (lastNo) {
+      this.setState({ screen: 'black' });
+      this.type(this.FOG, () => this.setState({ screen: end }));
+    } else {
+      this.setState({ screen: end });
+    }
+  };
+
+  answer = (agree) => {
+    const qi = this.state.qi;
+    const yes = this.state.yes + (agree ? 1 : 0);
+    const last = qi >= this.QS.length - 1;
+    this.setState({ yes }, () => {
+      if (last) { this.finish(!agree); return; }
+      this.setState({ qi: qi + 1 });
+      this.type(this.QS[qi + 1]);
+    });
+  };
+
+  restart = () => {
+    clearInterval(this._t); clearTimeout(this._a);
+    this.setState({ screen: 'login', pw: '', err: false, qi: 0, yes: 0, typed: '', done: false });
+  };
+
+  renderVals() {
+    const s = this.state;
+    const n = this.QS.length;
+    return {
+      isLogin: s.screen === 'login',
+      isLetter: s.screen === 'intro' || s.screen === 'q',
+      isQ: s.screen === 'q',
+      isBlack: s.screen === 'black',
+      isBlue: s.screen === 'blue',
+      isWhite: s.screen === 'white',
+      typed: s.typed,
+      counter: String(s.qi + 1).padStart(2, '0') + ' / ' + String(n).padStart(2, '0'),
+      showIntroBtn: s.screen === 'intro' && s.done,
+      showChoices: s.screen === 'q' && s.done,
+      pw: s.pw,
+      err: s.err,
+      onPw: (e) => this.setState({ pw: e.target.value, err: false }),
+      onKey: (e) => { if (e.key === 'Enter') this.submit(); },
+      submit: this.submit,
+      begin: this.begin,
+      agree: () => this.answer(true),
+      oppose: () => this.answer(false),
+      restart: this.restart
+    };
+  }
+}
+</script>
+</body>
+</html>
